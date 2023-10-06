@@ -36,4 +36,13 @@ class Imc {
   void _calculateImc() {
     _imc = weight / pow(height, 2);
   }
+
+  
+  Map<String, dynamic> toMap() {
+    return {
+      'height': _height,
+      'weight': _weight,
+      'imc': _imc,
+    };
+  }
 }

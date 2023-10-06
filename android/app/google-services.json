@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133877714814",
+    "project_id": "calculadoradecalorias-da5d9",
+    "storage_bucket": "calculadoradecalorias-da5d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133877714814:android:9941f4c7fbd62236956d2f",
+        "android_client_info": {
+          "package_name": "com.example.app_imc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7xvmX1p77VjbLV0EPUz2lG13ooWyZAl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

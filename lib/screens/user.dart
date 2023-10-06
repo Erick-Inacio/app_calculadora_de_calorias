@@ -1,6 +1,7 @@
 import 'package:app_imc/models/imc_classification.dart';
 import 'package:app_imc/models/user_app.dart';
 import 'package:app_imc/screens/tela_calculos.dart';
+import 'package:app_imc/services/firebase.dart';
 import 'package:app_imc/themes/light_theme.dart';
 import 'package:app_imc/widgets/textFields/form_field.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class UserData extends StatefulWidget {
 }
 
 class _UserDataState extends State<UserData> {
+  bool _isSaving = false;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _height = TextEditingController();
@@ -112,23 +115,39 @@ class _UserDataState extends State<UserData> {
                 height: 15,
               ),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    UserApp userApp;
-                    userApp = instanciarObjeto();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => Calculation(
-                              userApp: userApp,
-                            )),
-                      ),
-                    );
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() && !_isSaving) {
+                    UserApp userApp = instanciarObjeto();
+                    final scaffoldMessenger = ScaffoldMessenger.of(context);
+                    setState(() {
+                      _isSaving = true;
+                    });
+                    try {
+                      await UserRepository.saveUser(userApp);
+                      if(mounted){
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => Calculation(userApp: userApp)),
+                        ),
+                      );
+                      }
+                    } catch (e) {
+                      scaffoldMessenger.showSnackBar(
+                        SnackBar(content: Text('Erro ao salvar os dados: $e')),
+                      );
+                    } finally {
+                      setState(() {
+                        _isSaving = false;
+                      });
+                    }
                   }
                 },
-                child: const Text(
-                  'Próximo',
-                ),
+                child: _isSaving
+                    ? const CircularProgressIndicator()
+                    : const Text(
+                        'Próximo',
+                      ),
               ),
             ],
           ),
@@ -142,12 +161,13 @@ class _UserDataState extends State<UserData> {
       height: double.parse(_height.text),
       weight: double.parse(_weight.text),
     );
-    UserApp userApp = UserApp(
+    UserApp userApp = UserApp.getInstance(
       name: _name.text,
       age: int.parse(_age.text),
       imcClassification: imcClassification,
       sexo: _sexo.text,
     );
+
     return userApp;
   }
 }
