@@ -1,3 +1,4 @@
+import 'package:app_imc/models/eer.dart';
 import 'package:app_imc/models/imc_classification.dart';
 import 'package:app_imc/models/user_app.dart';
 import 'package:app_imc/screens/tela_calculos.dart';
@@ -6,6 +7,7 @@ import 'package:app_imc/themes/light_theme.dart';
 import 'package:app_imc/widgets/textFields/form_field.dart';
 import 'package:flutter/material.dart';
 
+////
 class UserData extends StatefulWidget {
   const UserData({super.key});
 
@@ -124,13 +126,14 @@ class _UserDataState extends State<UserData> {
                     });
                     try {
                       await UserRepository.saveUser(userApp);
-                      if(mounted){
+                      if (mounted) {
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => Calculation(userApp: userApp)),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) =>
+                                Calculation(userApp: userApp)),
+                          ),
+                        );
                       }
                     } catch (e) {
                       scaffoldMessenger.showSnackBar(
@@ -168,6 +171,10 @@ class _UserDataState extends State<UserData> {
       sexo: _sexo.text,
     );
 
+    // userApp.eer = Eer.getEer(userApp);
+    double aux = Eer.getEer(userApp);
+    // print('\n\n${aux}\n\n');
+    userApp.eer = aux;
     return userApp;
   }
 }

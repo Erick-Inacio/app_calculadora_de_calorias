@@ -7,6 +7,7 @@ class UserApp {
   final int _age;
   final ImcClassification _imcClassification;
   final String _sexo;
+  double? _eer;
 
   //atributo estático para a chamada única
   static UserApp? _instance;
@@ -26,8 +27,15 @@ class UserApp {
 
   String get name => _name;
   int get age => _age;
+
   ImcClassification get imcClassification => _imcClassification;
   String get sexo => _sexo;
+
+  double get eer => _eer ?? 0;
+
+  set eer(double eer) {
+    _eer = eer;
+  }
 
   static UserApp get instance {
     if (_instance == null) {
@@ -62,6 +70,7 @@ class UserApp {
       'age': _age,
       'imcClassification': _imcClassification.toMap(),
       'sexo': _sexo,
+      'Eer': _eer,
     };
   }
 }

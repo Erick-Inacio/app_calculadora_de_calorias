@@ -42,7 +42,7 @@ class _CardPesonalizedState extends State<CardPesonalized> {
                   widget.title,
                   style: TextStyle(
                     color: widget.titleColor,
-                    fontSize: 25,
+                    fontSize: 20,
                   ),
                 ),
               ),

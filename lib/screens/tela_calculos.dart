@@ -57,6 +57,10 @@ class _CalculationState extends State<Calculation> {
                       title: 'Informações',
                       textBody: widget.userApp.imcClassification.infos,
                     ),
+                    CardPesonalized(
+                      title: 'Estimativa Energética',
+                      textBody: '${widget.userApp.eer.round().toString()} kcal',
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
